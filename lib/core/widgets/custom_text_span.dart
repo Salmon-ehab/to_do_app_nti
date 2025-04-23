@@ -12,23 +12,29 @@ class CustomTextSpan extends StatelessWidget {
   final Widget routePage;
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(children: [
-        TextSpan(text: text1, style: Styles.textStyle14),
-        WidgetSpan(
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => routePage),
-              );
-            },
-            child: Text("\t\t\t$text2",
-                style: Styles.textStyle14.copyWith(
-                    fontWeight: FontWeight.w400, color: Colors.black)),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          text1,
+          style: Styles.textStyle14.copyWith(color: Colors.black),
+        ),
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => routePage),
+            );
+          },
+          child: Text(
+            " \t\t\t$text2",
+            style: Styles.textStyle14.copyWith(
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
           ),
         ),
-      ]),
+      ],
     );
   }
 }

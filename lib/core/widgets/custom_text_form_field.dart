@@ -12,13 +12,13 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     required this.controller,
     this.validator,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.suffixIcon,
   });
 
   final String label;
   final bool isPassword;
-  final String prefixIcon;
+  final String? prefixIcon;
   final Widget? suffixIcon;
 
   final TextEditingController controller;
@@ -40,6 +40,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
         controller: widget.controller,
         obscureText: _isObscured,
         decoration: InputDecoration(
+          filled: true,
+            fillColor: AppColor.whiteColor,
             suffixIcon: widget.isPassword
                 ? IconButton(
                     icon: SizedBox(
@@ -58,18 +60,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     },
                   )
                 : widget.suffixIcon ?? const SizedBox.shrink(),
-            prefixIcon: SizedBox(
-              height: 24.h,
-              width: 24.w,
-              child: SvgPicture.asset(
-                widget.prefixIcon,
-                fit: BoxFit.scaleDown,
-              ),
-            ),
+            prefixIcon: widget.prefixIcon != null
+                ? SizedBox(
+                    height: 24.h,
+                    width: 24.w,
+                    child: SvgPicture.asset(
+                      widget.prefixIcon!,
+                      fit: BoxFit.scaleDown,
+                    ),
+                  )
+                : null,
             labelText: widget.label,
             labelStyle: Styles.textStyle14,
             border: borderFunction(AppColor.coolGray),
-            focusedBorder: borderFunction(Colors.blueAccent),
+            focusedBorder: borderFunction(Colors.green),
             enabledBorder: borderFunction(AppColor.coolGray),
             focusedErrorBorder: borderFunction(Colors.red),
             errorBorder: borderFunction(Colors.red)),

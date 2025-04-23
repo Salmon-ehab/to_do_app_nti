@@ -12,4 +12,22 @@ abstract class SvgAssets {
 
   // Full path:assets/svgs/Password - Iconly Pro.svg
   static const String passwordIcon = '${_imagePath}Password - Iconly Pro.svg';
+
+  // Full path:assets/svgs/splash_logo.svg
+  static const String splashIcon = '${_imagePath}splash_logo.svg';
+
+  // Full path:assets/svgs/let_start_logo.svg
+  static const String letStartLogo = '${_imagePath}let_start_logo.svg';
+
+  // Full path:assets/svgs/home_logo.svg
+  static const String homeLogo = '${_imagePath}home_logo.svg';
+
+  // Full path: assets/svgs/plus_icon.svg
+  static const String plusIcon = '${_imagePath}plus_icon.svg';
+
+  // Full path:assets/svgs/arrow.svg
+  static const String arrowIcon = '${_imagePath}arrow.svg';
+
+  // Full path: assets/svgs/Setting.svg
+  static const String settingIcon = '${_imagePath}Setting.svg';
 }

@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:login_task_nti/core/routes/routes.export.dart';
 import 'package:login_task_nti/core/utils/svg.dart';
+import 'package:login_task_nti/core/validator/validator_form_field.dart';
 import 'package:login_task_nti/core/widgets/custom_button.dart';
 import 'package:login_task_nti/core/widgets/custom_image.dart';
 import 'package:login_task_nti/core/widgets/custom_text_form_field.dart';
 import 'package:login_task_nti/core/widgets/custom_text_span.dart';
-import 'package:login_task_nti/feature/sign_in/presentation/views/sign_in_view.dart';
+import 'package:login_task_nti/generated/l10n.dart';
 
 class LogInBody extends StatefulWidget {
   const LogInBody({super.key});
@@ -15,9 +16,24 @@ class LogInBody extends StatefulWidget {
 }
 
 class _LogInBodyState extends State<LogInBody> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  late TextEditingController nameController;
+  late TextEditingController passwordController;
   GlobalKey<FormState> keyForm = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -26,53 +42,37 @@ class _LogInBodyState extends State<LogInBody> {
         child: Column(
           children: [
             const CustomImage(),
-            SizedBox(height: 30.h),
+            SizedBox(height: 23.h),
             CustomTextField(
-              label: "Username",
-              controller: nameController,
-              prefixIcon: SvgAssets.profileIcon,
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return "Please Enter user name!";
-                }
-                if (value.length < 4) {
-                  return "User name must be at least 4 characters.";
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 30.h),
+                label: S.of(context).Username,
+                controller: nameController,
+                prefixIcon: SvgAssets.profileIcon,
+                validator: ValidatorFormField.validateName),
+            SizedBox(height: 10.h),
             CustomTextField(
-              label: "Password",
-              controller: passwordController,
-              prefixIcon: SvgAssets.passwordIcon,
-              isPassword: true,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Please Enter password!";
-                }
-                if (value.length < 5) {
-                  return "Password must be at least 5 characters.";
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 30.h),
+                label: S.of(context).Password,
+                controller: passwordController,
+                prefixIcon: SvgAssets.passwordIcon,
+                isPassword: true,
+                validator: ValidatorFormField.validatePassword),
+            SizedBox(height: 23.h),
             CustomButton(
                 onPressed: () {
                   if (!keyForm.currentState!.validate()) {
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Please try again!")));
+                  } else {
+                    GoRouter.of(context).pushReplacement(Routes.homeView);
                   }
                 },
-                textButton: "Login"),
-            SizedBox(height: 30.h),
-            const Material(
+                textButton: S.of(context).login),
+            SizedBox(height: 41.h),
+             Material(
                 color: Colors.transparent,
                 child: CustomTextSpan(
-                    text1: "Don’t Have An Account?  ",
-                    text2: "Register",
-                    routePage: SigninView())),
+                    text1: S.of(context).q2,
+                    text2: S.of(context).Register,
+                    routePage:const SigninView())),
           ],
         ),
       ),
