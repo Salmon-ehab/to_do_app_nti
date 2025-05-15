@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_task_nti/core/helper/my_navigator.dart';
 import 'package:login_task_nti/core/utils/styles.dart';
 
 class CustomTextSpan extends StatelessWidget {
@@ -21,10 +22,7 @@ class CustomTextSpan extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => routePage),
-            );
+            MyNavigator.goto(context, screen: routePage);
           },
           child: Text(
             " \t\t\t$text2",

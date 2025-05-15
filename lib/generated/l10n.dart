@@ -55,10 +55,10 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Welcome To  Do It !`
+  /// `Welcome To Do It !`
   String get welcomeText1 {
     return Intl.message(
-      'Welcome To  Do It !',
+      'Welcome To Do It !',
       name: 'welcomeText1',
       desc: '',
       args: [],
@@ -135,9 +135,9 @@ class S {
     return Intl.message('Hello!', name: 'hello', desc: '', args: []);
   }
 
-  /// `Ahmed Saber`
-  String get AhmedSaber {
-    return Intl.message('Ahmed Saber', name: 'AhmedSaber', desc: '', args: []);
+  /// `Salma Ehab`
+  String get name {
+    return Intl.message('Salma Ehab', name: 'name', desc: '', args: []);
   }
 
   /// `There are no tasks yet, Press the button To add New Task`

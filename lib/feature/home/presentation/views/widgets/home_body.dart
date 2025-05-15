@@ -17,13 +17,13 @@ class _HomeBodyState extends State<HomeBody> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 20.h),
-            const CustomAppbar(),
+           const CustomAppbar(),
             isClicked ? const TasksFile() : const EmptyTaskWidget(),
             SizedBox(height: 40.h),
             Switch(

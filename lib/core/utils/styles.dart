@@ -13,6 +13,11 @@ abstract class Styles {
     fontWeight: FontWeight.w200,
     color: AppColor.grey,
   );
+   static TextStyle textStyle15 = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColor.green,
+  );
   static TextStyle textStyle16 = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeight.w500,
@@ -37,5 +42,30 @@ abstract class Styles {
     fontSize: 36.sp,
     fontWeight: FontWeight.w900,
     color: AppColor.green,
+  );
+  static TextStyle textStyle40 = TextStyle(
+    fontSize: 40.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColor.whiteColor,
+  );
+  static TextStyle text12Weight400 = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColor.whiteColor,
+  );
+  static TextStyle text14Weight300 = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w300,
+    color: AppColor.whiteColor,
+  );
+    static TextStyle text12Weight500 = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColor.grey,
+  );
+  static TextStyle text14Weigh500 = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColor.coolBlack,
   );
 }

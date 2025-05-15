@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:login_task_nti/core/helper/my_responsive.dart';
 import 'package:login_task_nti/core/utils/app_color.dart';
 import 'package:login_task_nti/core/utils/styles.dart';
 import 'package:login_task_nti/core/utils/svg.dart';
@@ -33,51 +34,54 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 63.h,
-      width: 331.w,
-      child: TextFormField(
-        controller: widget.controller,
-        obscureText: _isObscured,
-        decoration: InputDecoration(
-          filled: true,
-            fillColor: AppColor.whiteColor,
-            suffixIcon: widget.isPassword
-                ? IconButton(
-                    icon: SizedBox(
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal:MyResponsive.width(context, 23)),
+      child: SizedBox(
+        height:MyResponsive.height(context, 63),
+        width:double.infinity,
+        child: TextFormField(
+          controller: widget.controller,
+          obscureText: _isObscured,
+          decoration: InputDecoration(
+            filled: true,
+              fillColor: AppColor.whiteColor,
+              suffixIcon: widget.isPassword
+                  ? IconButton(
+                      icon: SizedBox(
+                        height: 24.h,
+                        width: 24.w,
+                        child: SvgPicture.asset(
+                          _isObscured ? SvgAssets.lockIcon : SvgAssets.unLockIcon,
+                          fit: BoxFit.scaleDown,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isObscured = !_isObscured;
+                        });
+                      },
+                    )
+                  : widget.suffixIcon ?? const SizedBox.shrink(),
+              prefixIcon: widget.prefixIcon != null
+                  ? SizedBox(
                       height: 24.h,
                       width: 24.w,
                       child: SvgPicture.asset(
-                        _isObscured ? SvgAssets.lockIcon : SvgAssets.unLockIcon,
+                        widget.prefixIcon!,
                         fit: BoxFit.scaleDown,
-                        color: Colors.grey,
                       ),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isObscured = !_isObscured;
-                      });
-                    },
-                  )
-                : widget.suffixIcon ?? const SizedBox.shrink(),
-            prefixIcon: widget.prefixIcon != null
-                ? SizedBox(
-                    height: 24.h,
-                    width: 24.w,
-                    child: SvgPicture.asset(
-                      widget.prefixIcon!,
-                      fit: BoxFit.scaleDown,
-                    ),
-                  )
-                : null,
-            labelText: widget.label,
-            labelStyle: Styles.textStyle14,
-            border: borderFunction(AppColor.coolGray),
-            focusedBorder: borderFunction(Colors.green),
-            enabledBorder: borderFunction(AppColor.coolGray),
-            focusedErrorBorder: borderFunction(Colors.red),
-            errorBorder: borderFunction(Colors.red)),
-        validator: widget.validator,
+                    )
+                  : null,
+              labelText: widget.label,
+              labelStyle: Styles.textStyle14,
+              border: borderFunction(AppColor.coolGray),
+              focusedBorder: borderFunction(Colors.green),
+              enabledBorder: borderFunction(AppColor.coolGray),
+              focusedErrorBorder: borderFunction(Colors.red),
+              errorBorder: borderFunction(Colors.red)),
+          validator: widget.validator,
+        ),
       ),
     );
   }

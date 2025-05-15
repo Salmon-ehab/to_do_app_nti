@@ -1,5 +1,5 @@
 {
-    "welcomeText1":"Welcome To  Do It !",
+    "welcomeText1":"Welcome To Do It !",
     "welcomeText2":"Ready to conquer your tasks? Let's Do It together.",
     "LetButton" :"Let’s Start",
     "Username":"Username",
@@ -10,7 +10,7 @@
     "login":"Login",
     "q2":"Don’t Have An Account?",
     "hello":"Hello!",
-    "AhmedSaber":"Ahmed Saber",
+    "name":"Salma Ehab",
     "noTasks":"There are no tasks yet, Press the button To add New Task",
     "updateprofile" :"Update Profile",
     "ChangePassword":"Change Password",

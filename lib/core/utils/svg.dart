@@ -30,4 +30,22 @@ abstract class SvgAssets {
 
   // Full path: assets/svgs/Setting.svg
   static const String settingIcon = '${_imagePath}Setting.svg';
+
+  // Full path: assets/svgs/filter_icon.svg
+  static const String filterIcon = '${_imagePath}filter_icon.svg';
+
+  // Full path: assets/svgs/float_action_icon.svg
+  static const String floatActionIcon = '${_imagePath}float_action_icon.svg';
+
+  // Full path: assets/svgs/home_icon.svg
+  static const String homeIcon = '${_imagePath}home_icon.svg';
+
+  // Full path: assets/svgs/personal_icon.svg
+  static const String personalIcon = '${_imagePath}personal_icon.svg';
+
+  // Full path: assets/svgs/Search.svg
+  static const String searchIcon = '${_imagePath}Search.svg';
+
+  // Full path: assets/svgs/work_icon.svg
+  static const String workIcon = '${_imagePath}work_icon.svg';
 }

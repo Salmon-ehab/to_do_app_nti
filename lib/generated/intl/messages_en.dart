@@ -23,7 +23,6 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "AddTask": MessageLookupByLibrary.simpleMessage("Add Task"),
-    "AhmedSaber": MessageLookupByLibrary.simpleMessage("Ahmed Saber"),
     "ChangePassword": MessageLookupByLibrary.simpleMessage("Change Password"),
     "ConfirmPassword": MessageLookupByLibrary.simpleMessage("Confirm Password"),
     "Description": MessageLookupByLibrary.simpleMessage("Description"),
@@ -46,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "hello": MessageLookupByLibrary.simpleMessage("Hello!"),
     "login": MessageLookupByLibrary.simpleMessage("Login"),
+    "name": MessageLookupByLibrary.simpleMessage("Salma Ehab"),
     "noTasks": MessageLookupByLibrary.simpleMessage(
       "There are no tasks yet, Press the button To add New Task",
     ),
@@ -77,7 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "validateTitle2": MessageLookupByLibrary.simpleMessage(
       "Title must be at least 5 characters.",
     ),
-    "welcomeText1": MessageLookupByLibrary.simpleMessage("Welcome To  Do It !"),
+    "welcomeText1": MessageLookupByLibrary.simpleMessage("Welcome To Do It !"),
     "welcomeText2": MessageLookupByLibrary.simpleMessage(
       "Ready to conquer your tasks? Let\'s Do It together.",
     ),

@@ -23,7 +23,6 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "AddTask": MessageLookupByLibrary.simpleMessage("أَضف مهمة"),
-    "AhmedSaber": MessageLookupByLibrary.simpleMessage("احمد صابر"),
     "ChangePassword": MessageLookupByLibrary.simpleMessage("تغيير كلمة المرور"),
     "ConfirmPassword": MessageLookupByLibrary.simpleMessage(
       "تأكيد كلمة المرور",
@@ -46,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "hello": MessageLookupByLibrary.simpleMessage("مرحبًا!"),
     "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+    "name": MessageLookupByLibrary.simpleMessage("سلمى إيهاب"),
     "noTasks": MessageLookupByLibrary.simpleMessage(
       "لا توجد مهام حتى الآن، اضغط على الزر لإضافة مهمة جديدة",
     ),

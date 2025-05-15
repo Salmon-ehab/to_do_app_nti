@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:login_task_nti/core/cache/cache_helper.dart';
+import 'package:login_task_nti/core/cache/cache_key.dart';
 import 'package:login_task_nti/core/utils/styles.dart';
 import 'package:login_task_nti/feature/settings/presentation/views/widgets/language_switch.dart';
 import 'package:login_task_nti/generated/l10n.dart';
@@ -37,11 +39,14 @@ class _SettingBodyState extends State<SettingBody> {
       ),
     );
   }
-  void _toggleLanguage() {
-  Locale newLocale = isEnglish ?const Locale('ar', 'AE') :const Locale('en', 'US');
-  LoginApp.setLocale(context, newLocale);
+void _toggleLanguage() async {
+  Locale newLocale = isEnglish ? const Locale('ar', 'AE') : const Locale('en', 'US');
+  await CacheHelper.saveData(key: CacheKey.language, value: newLocale.languageCode);
+  print(CacheHelper.getData(key: CacheKey.language));
+  ToDoApp.setLocale(context, newLocale); // هذه الطريقة تعيد بناء التطبيق
   setState(() {
-      isEnglish = !isEnglish;
-    });
+    isEnglish = !isEnglish;
+      print(CacheHelper.getData(key: CacheKey.language));
 
+  });
 }}

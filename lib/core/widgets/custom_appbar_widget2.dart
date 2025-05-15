@@ -1,6 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:login_task_nti/core/helper/my_navigator.dart';
 import 'package:login_task_nti/core/routes/routes.export.dart';
 import 'package:login_task_nti/core/utils/app_color.dart';
 import 'package:login_task_nti/core/utils/styles.dart';
@@ -13,8 +14,9 @@ class CustomAppbarWidget2 extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      scrolledUnderElevation: 0,
       leading: Transform.rotate(
-        angle:Intl.getCurrentLocale().startsWith('en')? 3.1416:0,
+        angle: Intl.getCurrentLocale().startsWith('en') ? 3.1416 : 0,
         child: IconButton(
           padding: EdgeInsets.zero,
           icon: SvgPicture.asset(
@@ -24,7 +26,7 @@ class CustomAppbarWidget2 extends StatelessWidget
             fit: BoxFit.contain,
           ),
           onPressed: () {
-            GoRouter.of(context).pop();
+            MyNavigator.pop(context);
           },
         ),
       ),

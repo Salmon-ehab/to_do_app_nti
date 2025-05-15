@@ -1,55 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:login_task_nti/core/validator/validator_form_field.dart';
+import 'package:login_task_nti/core/helper/validator/validator_form_field.dart';
 import 'package:login_task_nti/core/widgets/custom_button.dart';
-import 'package:login_task_nti/core/widgets/custom_image.dart';
 import 'package:login_task_nti/core/widgets/custom_text_form_field.dart';
+import 'package:login_task_nti/core/widgets/image_manager/widget/image_view.dart';
+import 'package:login_task_nti/feature/add_task/presentation/manager/add_task_cubit/add_task_cubit.dart';
+import 'package:login_task_nti/feature/add_task/presentation/manager/add_task_cubit/add_task_state.dart';
 
-class AddTaskBody extends StatefulWidget {
+class AddTaskBody extends StatelessWidget {
   const AddTaskBody({super.key});
 
   @override
-  State<AddTaskBody> createState() => _AddTaskBodyState();
-}
-
-class _AddTaskBodyState extends State<AddTaskBody> {
-  late TextEditingController titleController;
-  late TextEditingController descriptionController;
-
-  @override
-  void initState() {
-    super.initState();
-    titleController = TextEditingController();
-    descriptionController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    titleController.dispose();
-    descriptionController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 36.h),
-            CustomImage(height: 207.h, width: 261.w),
-            SizedBox(height: 29.h),
-            CustomTextField(label: "Title", controller: titleController,validator: ValidatorFormField.validateTitle,),
-            SizedBox(height: 17.h),
-            CustomTextField(
-                label: "Description", controller: descriptionController,validator: ValidatorFormField.validateDescription),
-            SizedBox(height: 30.h),
-            CustomButton(onPressed: () {}, textButton: "Add Task")
-          ],
+    return BlocConsumer<AddTaskCubit, AddTaskState>(listener: (context, state) {
+      if (state is AddTaskSuccessState) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(state.message)));
+      } else if (state is AddTaskErrorState) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(state.error)));
+      }
+    }, builder: (context, state) {
+      return SizedBox(
+        width: double.infinity,
+        child: SingleChildScrollView(
+          child: Form(
+            key: AddTaskCubit.get(context).key,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 36.h),
+                CustomImageView(
+                  pickImage: (image) async {
+                    AddTaskCubit.get(context).image = image;
+                  },
+                ),
+                SizedBox(height: 29.h),
+                CustomTextField(
+                  label: "Title",
+                  controller: AddTaskCubit.get(context).titleController,
+                  validator: ValidatorFormField.validateTitle,
+                ),
+                SizedBox(height: 17.h),
+                CustomTextField(
+                    label: "Description",
+                    controller: AddTaskCubit.get(context).descriptionController,
+                    validator: ValidatorFormField.validateDescription),
+                SizedBox(height: 30.h),
+                state is AddTaskLoadingState
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : CustomButton(
+                        onPressed: () {
+                          AddTaskCubit.get(context).onAddTaskPressed();
+                        },
+                        textButton: "Add Task"),
+              ],
+            ),
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

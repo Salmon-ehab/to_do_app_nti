@@ -1,6 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:login_task_nti/core/helper/my_navigator.dart';
 import 'package:login_task_nti/core/routes/routes.export.dart';
 import 'package:login_task_nti/core/utils/app_color.dart';
 import 'package:login_task_nti/core/utils/styles.dart';
@@ -11,7 +12,7 @@ class ProfileTabsWidget extends StatelessWidget {
       {super.key, required this.prefixIcon, required this.textTab, required this.routes});
   final String prefixIcon;
   final String textTab;
-  final String routes;
+  final Widget routes;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +37,7 @@ class ProfileTabsWidget extends StatelessWidget {
           const Spacer(),
           InkWell(
             onTap: () =>
-                    GoRouter.of(context).push(routes)
+                   MyNavigator.goto(context,screen:routes )
                   ,
             child:Transform.rotate(
               angle: Intl.getCurrentLocale().startsWith('ar') ? 3.14 : 0,

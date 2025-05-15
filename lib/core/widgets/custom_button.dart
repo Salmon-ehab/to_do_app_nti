@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:login_task_nti/core/helper/my_responsive.dart';
 import 'package:login_task_nti/core/utils/app_color.dart';
 import 'package:login_task_nti/core/utils/styles.dart';
 
@@ -11,8 +12,9 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 48.h,
-      width: 331.w,
+      height: MyResponsive.height(context, 48),
+      margin:const EdgeInsets.symmetric(horizontal: 23),
+      width:double.infinity,
       decoration: BoxDecoration(
         color: AppColor.green,
         borderRadius: BorderRadius.circular(14.r),
