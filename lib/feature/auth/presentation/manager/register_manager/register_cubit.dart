@@ -22,7 +22,10 @@ class RegisterCubit extends Cubit<RegisterState> {
     emit(RegisterFailureState(error: error!));
     return;
   }
-
+  if (image == null) {
+        emit(RegisterFailureState(error: "please add photo"));
+        return;
+      }
   if (passwordController.text != confirmPasswordController.text) {
     error = "Passwords must be identical.";
     emit(RegisterFailureState(error: error!));

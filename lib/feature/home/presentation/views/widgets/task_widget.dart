@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:login_task_nti/core/utils/app_color.dart';
 import 'package:login_task_nti/core/utils/styles.dart';
+import 'package:login_task_nti/feature/home/data/models/task_model_home.dart';
 
 class TaskWidget extends StatelessWidget {
-  const TaskWidget({super.key});
-
+  const TaskWidget({super.key, required this.taskModelHome});
+  final TaskModelHome taskModelHome;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,14 +33,14 @@ class TaskWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "My First Task",
+                taskModelHome.title ?? "No Name",
                 style: Styles.textStyle12.copyWith(
                     color: AppColor.grey, fontWeight: FontWeight.w400),
               ),
               SizedBox(
                   width: 180.w,
                   child: Text(
-                    "Improve my English skills by trying to speek",
+                    taskModelHome.description ?? "No Desc",
                     style: Styles.textStyle14.copyWith(
                         color: AppColor.coolBlack, fontWeight: FontWeight.w300),
                     maxLines: 2,
@@ -47,13 +48,41 @@ class TaskWidget extends StatelessWidget {
                   )),
             ],
           ),
-          Text(
-            "11/03/2025\n\t\t05:00 PM",
-            style: Styles.textStyle12
-                .copyWith(color: AppColor.grey, fontWeight: FontWeight.w400),
+          Column(
+            children: [
+              // Text(
+              //   taskModelHome.createdAt??"No Date",
+              //   style: Styles.textStyle12
+              //       .copyWith(color: AppColor.grey, fontWeight: FontWeight.w400),
+              // ),
+              Text(
+                formatTextWithLineBreaks(
+                    taskModelHome.createdAt ?? "No Date", 3),
+                style: Styles.textStyle12.copyWith(
+                    color: AppColor.grey, fontWeight: FontWeight.w400),
+              )
+
+              // CircleAvatar(
+              //   radius: 10,
+              //   child: Image.file(File(taskModelHome.imagePath!)),
+              // )
+            ],
           ),
         ],
       ),
     );
   }
+}
+
+String formatTextWithLineBreaks(String text, int wordsPerLine) {
+  List<String> words = text.split(' ');
+  List<String> lines = [];
+
+  for (int i = 0; i < words.length; i += wordsPerLine) {
+    int end =
+        (i + wordsPerLine < words.length) ? i + wordsPerLine : words.length;
+    lines.add(words.sublist(i, end).join(' '));
+  }
+
+  return lines.join('\n');
 }

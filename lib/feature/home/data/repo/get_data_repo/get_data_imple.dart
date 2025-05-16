@@ -6,7 +6,7 @@ import 'package:login_task_nti/core/network/api_consumer.dart';
 import 'package:login_task_nti/core/network/end_points.dart';
 import 'package:login_task_nti/feature/home/data/models/login_response_model.dart';
 import 'package:login_task_nti/feature/home/data/models/user_model.dart';
-import 'package:login_task_nti/feature/home/data/repo/get_data_repo.dart';
+import 'package:login_task_nti/feature/home/data/repo/get_data_repo/get_data_repo.dart';
 
 class GetDataRepoImple implements GetDataRepo {
   final ApiConsumer apiConsumer;

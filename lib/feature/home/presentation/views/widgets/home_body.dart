@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:login_task_nti/core/utils/app_color.dart';
 import 'package:login_task_nti/core/widgets/custom_appbar.dart';
-import 'package:login_task_nti/feature/home/presentation/views/widgets/empty_task_widget.dart';
 import 'package:login_task_nti/feature/home/presentation/views/widgets/tasks_file.dart';
 
 class HomeBody extends StatefulWidget {
@@ -24,16 +22,18 @@ class _HomeBodyState extends State<HomeBody> {
           children: [
             SizedBox(height: 20.h),
            const CustomAppbar(),
-            isClicked ? const TasksFile() : const EmptyTaskWidget(),
+            // isClicked ? 
+            const TasksFile() ,
+            // : const EmptyTaskWidget(),
             SizedBox(height: 40.h),
-            Switch(
-                value: isClicked,
-                activeColor: AppColor.green,
-                onChanged: (value) {
-                  setState(() {
-                    isClicked = !isClicked;
-                  });
-                })
+            // Switch(
+            //     value: isClicked,
+            //     activeColor: AppColor.green,
+            //     onChanged: (value) {
+            //       setState(() {
+            //         isClicked = !isClicked;
+            //       });
+            //     })
           ],
         ),
       ),

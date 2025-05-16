@@ -28,7 +28,7 @@ class RepoRegisterImple implements RepoRegister {
       // if (responseRegisterModel.status == false) {
       //   return Left(Failure("Username already exists"));
       // }
-      print("salma:$response");
+     // print("salma:$response");
       return Right(responseRegisterModel);
     } on DioException catch (e) {
       final error = AppException.fromDio(e);

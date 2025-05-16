@@ -20,6 +20,7 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginErrorState(error: error!));
       return;
     }
+   
     emit(LoginLoadingState());
 
     final result = await repoLoginImplementaiton.loginWithEmailAndPassword(

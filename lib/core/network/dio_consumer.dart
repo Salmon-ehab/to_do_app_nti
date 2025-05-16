@@ -9,12 +9,16 @@ class DioConsumer extends ApiConsumer {
 
   DioConsumer({required this.dio}) {
     dio.options.baseUrl = EndPoints.baseUrl;
-    dio.interceptors.add(InterceptorsWrapper(
-        onRequest: (options, handler) {
-          //  print("--headers:${options.headers.toString()}");
-          return handler.next(options);
-        },
-        onError: (options, handler) {}));
+    dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
+      print("--- Headers : ${options.headers.toString()}");
+      print("--- endpoint : ${options.path.toString()}");
+      return handler.next(options);
+    }, onResponse: (response, handler) {
+      print("--- Response : ${response.data.toString()}");
+      return handler.next(response);
+    }, onError: (options, handler) {
+      print("--headers:${options.error.toString()}");
+    }));
   }
   @override
   Future delete(
@@ -101,7 +105,9 @@ class DioConsumer extends ApiConsumer {
       bool isProtected = false}) async {
     try {
       final response = await dio.put(path,
-          data: isFormData ? FormData.fromMap(data) : data,
+          data: isFormData
+              ? FormData.fromMap(data as Map<String, dynamic>)
+              : data,
           queryParameters: queryParameter,
           options: Options(headers: {
             if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken}',

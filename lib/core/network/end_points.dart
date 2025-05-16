@@ -6,5 +6,7 @@ abstract class EndPoints {
   static const String register = 'register';
   static const String getUserData = 'get_user_data';
   static const String updateProfile ='update_profile';
+    static const String getTasks ='my_tasks';
+
 
 }

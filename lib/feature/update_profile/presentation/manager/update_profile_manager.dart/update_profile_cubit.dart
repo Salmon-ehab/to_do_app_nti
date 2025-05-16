@@ -14,18 +14,21 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
 
   getUpdateProfile() async {
     if (!key.currentState!.validate()) {
-      if (image == null) {
+      return;
+    }
+     if (image == null) {
         emit(UpdateFailureState(error: "please add photo"));
         return;
       }
-    }
     emit(UpdateLoadingState());
     var result = await updateRepoImple.updateProfile(
         userName: nameController.text, image: image!);
     result.fold((error) {
       emit(UpdateFailureState(error: error.toString()));
+      print("error salma:$error");
     }, (response) {
       emit(UpdateSuccessState(responseModel: response));
+      print("success:$response");
     });
   }
 }

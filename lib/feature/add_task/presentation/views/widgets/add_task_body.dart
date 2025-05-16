@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:login_task_nti/core/helper/my_navigator.dart';
 import 'package:login_task_nti/core/helper/validator/validator_form_field.dart';
 import 'package:login_task_nti/core/widgets/custom_button.dart';
 import 'package:login_task_nti/core/widgets/custom_text_form_field.dart';
 import 'package:login_task_nti/core/widgets/image_manager/widget/image_view.dart';
 import 'package:login_task_nti/feature/add_task/presentation/manager/add_task_cubit/add_task_cubit.dart';
 import 'package:login_task_nti/feature/add_task/presentation/manager/add_task_cubit/add_task_state.dart';
+import 'package:login_task_nti/feature/home/presentation/views/home_view.dart';
 
 class AddTaskBody extends StatelessWidget {
   const AddTaskBody({super.key});
@@ -17,6 +19,7 @@ class AddTaskBody extends StatelessWidget {
       if (state is AddTaskSuccessState) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(state.message)));
+            MyNavigator.getOff(context, screen:const HomeView(),isReplace: true);
       } else if (state is AddTaskErrorState) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(state.error)));

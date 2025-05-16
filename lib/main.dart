@@ -9,9 +9,8 @@ import 'package:login_task_nti/core/network/dio_consumer.dart';
 import 'package:login_task_nti/core/routes/routes.export.dart';
 import 'package:login_task_nti/core/utils/app_color.dart';
 import 'package:login_task_nti/core/utils/constant.dart';
-import 'package:login_task_nti/feature/home/data/repo/get_data_imple.dart';
+import 'package:login_task_nti/feature/home/data/repo/get_data_repo/get_data_imple.dart';
 import 'package:login_task_nti/feature/home/presentation/manager/user_cubit/user_cubit.dart';
-import 'package:login_task_nti/feature/update_profile/presentation/views/updata_profile_view.dart';
 import 'package:login_task_nti/generated/l10n.dart';
 
 void main() async {

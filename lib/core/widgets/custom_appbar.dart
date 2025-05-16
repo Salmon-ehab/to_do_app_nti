@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:login_task_nti/core/cache/cache_helper.dart';
+import 'package:login_task_nti/core/cache/cache_key.dart';
 import 'package:login_task_nti/core/helper/my_navigator.dart';
 import 'package:login_task_nti/core/routes/routes.export.dart';
 import 'package:login_task_nti/core/utils/app_color.dart';
@@ -25,7 +27,7 @@ class CustomAppbar extends StatelessWidget {
       }
     }, builder: (context, state) {
       return SizedBox(
-        height: 50,
+        height: 60,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Row(
@@ -75,7 +77,17 @@ class CustomAppbar extends StatelessWidget {
                         height: 24.h,
                         width: 24.w,
                       ))
-                  : const SizedBox.shrink()
+                  : const SizedBox.shrink(),
+                     const  SizedBox(width: 10,),
+                     isNeededIcon == true
+                  ? IconButton(
+                      onPressed: () {
+                        CacheHelper.removeData(key: CacheKey.accessToken);
+                        MyNavigator.goto(context,
+                            screen: () => const LogInView());
+                      },
+                      icon:const Icon(Icons.logout,size: 20,))
+                  : const SizedBox.shrink(),
             ],
           ),
         ),
