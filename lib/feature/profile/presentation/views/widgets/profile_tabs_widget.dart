@@ -37,7 +37,7 @@ class ProfileTabsWidget extends StatelessWidget {
           const Spacer(),
           InkWell(
             onTap: () =>
-                   MyNavigator.goto(context,screen:()=> routes )
+                   MyNavigator.goTo(screen:()=> routes )
                   ,
             child:Transform.rotate(
               angle: Intl.getCurrentLocale().startsWith('ar') ? 3.14 : 0,

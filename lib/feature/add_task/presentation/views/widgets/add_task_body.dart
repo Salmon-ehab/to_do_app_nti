@@ -19,7 +19,7 @@ class AddTaskBody extends StatelessWidget {
       if (state is AddTaskSuccessState) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(state.message)));
-            MyNavigator.getOff(context, screen:const HomeView(),isReplace: true);
+            MyNavigator.goTo( screen:const HomeView(),isReplace: true);
       } else if (state is AddTaskErrorState) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(state.error)));
@@ -52,7 +52,7 @@ class AddTaskBody extends StatelessWidget {
                     validator: ValidatorFormField.validateDescription),
                 SizedBox(height: 30.h),
                 state is AddTaskLoadingState
-                    ? Center(
+                    ?const Center(
                         child: CircularProgressIndicator(),
                       )
                     : CustomButton(

@@ -1,21 +1,24 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 abstract class MyNavigator {
-  static goto(context, {required screen}) {
-    Get.to(screen,
-        transition: Transition.rightToLeftWithFade,
-        duration: const Duration(seconds: 1));
-  }
-
-  static getOff(context, {required screen, bool isReplace = false}) {
+  static goTo(
+      {required screen,
+      bool isReplace = false,
+      Transition transition = Transition.rightToLeftWithFade,
+      Duration? duration}) {
     if (isReplace) {
       Get.offAll(screen,
-          transition: Transition.rightToLeftWithFade,
-          duration: const Duration(seconds: 1));
+          transition: Intl.defaultLocale == "en"
+              ? Transition.rightToLeftWithFade
+              : Transition.leftToRightWithFade,
+          duration: duration ?? const Duration(seconds: 1));
     } else {
-      Get.off(screen,
-          transition: Transition.rightToLeftWithFade,
-          duration: const Duration(seconds: 1));
+      Get.to(screen,
+          transition: Intl.defaultLocale == "en"
+              ? Transition.rightToLeftWithFade
+              : Transition.leftToRightWithFade,
+          duration: duration ?? const Duration(seconds: 1));
     }
   }
 

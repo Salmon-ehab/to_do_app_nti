@@ -17,7 +17,7 @@ Future<Either<Failure, List<TaskModelHome>>> getTask() async {
     final response =
         await apiConsumer.get(EndPoints.getTasks, isProtected: true);
 
-    print("tasks: $response");
+    // print("tasks: $response");
 
     if (response["status"] != null && response["status"] == true) {
       final List tasksJson = response["tasks"] ?? [];
@@ -28,7 +28,7 @@ Future<Either<Failure, List<TaskModelHome>>> getTask() async {
         final task = TaskModelHome.fromJson(tasksJson[i]);
         tasks.add(task);
       }
-
+          print("salma $tasks");
       return Right(tasks);
     } else {
       throw Exception("Failed to fetch tasks.\nTry again later.");

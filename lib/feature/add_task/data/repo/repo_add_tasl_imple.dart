@@ -20,7 +20,7 @@ class RepoAddTaslImple implements RepoAddTask {
       required XFile image}) async {
     try {
       final task = TaskModel(title: title, desc:desc, image: image);
-      final data = await task.toJson();
+      final data = await task.toFormData();
       
 
       final response = await apiConsumer.post(EndPoints.addTask,

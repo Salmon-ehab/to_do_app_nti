@@ -16,7 +16,7 @@ class GetDataRepoImple implements GetDataRepo {
     try {
       final response =
           await apiConsumer.get(EndPoints.getUserData, isProtected: true);
-print("📦 Raw API Response: $response");
+// print("📦 Raw API Response: $response");
       LoginResponseModel loginResponseModel =
           LoginResponseModel.fromJson(response);
       if (loginResponseModel.status != null &&

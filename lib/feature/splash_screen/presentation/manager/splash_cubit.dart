@@ -16,9 +16,9 @@ class SplashCubit extends Cubit<void> {
       //  if (context.mounted) {
       CacheData.firstTime = CacheHelper.getData(key: CacheKey.firstTime);
       if (CacheData.firstTime != null) {
-        MyNavigator.getOff(context, screen: () =>const LogInView(), isReplace: true);
+        MyNavigator.goTo( screen: () =>const LogInView(), isReplace: true);
       } else {
-        MyNavigator.getOff(context,
+        MyNavigator.goTo(
             screen: () =>const LetStartView(), isReplace: true);
       }
       //    }

@@ -36,17 +36,14 @@ class _SplashBodyState extends State<SplashBody> {
         CacheData.accessToken = CacheHelper.getData(key: CacheKey.accessToken);
         if (CacheData.accessToken != null) {
           UserCubit.get(context).getUserDataFromAPI();
-          MyNavigator.getOff(context,
-              screen: () => HomeView(), isReplace: true);
+          MyNavigator.goTo(screen: () => const HomeView(), isReplace: true);
         } else {
           // goto login
-          MyNavigator.getOff(context,
-              screen: () => LogInView(), isReplace: true);
+          MyNavigator.goTo(screen: () => const LogInView(), isReplace: true);
         }
       } else // first time
       {
-        MyNavigator.getOff(context,
-            screen: () =>const LetStartView(), isReplace: true);
+        MyNavigator.goTo(screen: () => const LetStartView(), isReplace: true);
       }
     });
     super.initState();

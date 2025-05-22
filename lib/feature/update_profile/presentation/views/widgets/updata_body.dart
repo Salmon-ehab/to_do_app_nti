@@ -26,9 +26,9 @@ class UpdataBody extends StatelessWidget {
           );
         } else if (state is UpdateSuccessState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Profile updated successfully")),
+            const SnackBar(content: Text("Profile updated successfully")),
           );
-          MyNavigator.goto(context, screen: HomeView());
+          MyNavigator.goTo( screen: const HomeView());
         }
       },
       builder: (context, state) {
@@ -48,12 +48,14 @@ class UpdataBody extends StatelessWidget {
               ),
               SizedBox(height: 27.h),
 
-              CustomButton(
-                  onPressed: () {
-                    UpdateProfileCubit.get(context).getUpdateProfile();
-                    UserCubit.get(context).getUserDataFromAPI();
-                  },
-                  textButton: S.of(context).Update)
+              state is UpdateLoadingState
+                  ? const CircularProgressIndicator()
+                  : CustomButton(
+                      onPressed: () {
+                        UpdateProfileCubit.get(context).getUpdateProfile();
+                        UserCubit.get(context).getUserDataFromAPI();
+                      },
+                      textButton: S.of(context).Update),
             ],
           ),
         );

@@ -12,14 +12,21 @@ class TaskModel {
     return TaskModel(
         title: json['title'], desc: json['description'], image: json['image']);
   }
-
-  Future<Map<String, dynamic>> toJson() async {
-    return {
-      'title': title??"",
-      'description': desc??"",
-      'image': image == null
-          ? null
-          : await MultipartFile.fromFile(image!.path, filename: image!.name)
-    };
+ FormData toFormData() {
+    return FormData.fromMap({
+      'title': title ?? "",
+      'description': desc ?? "",
+      if (image != null)
+        'image': MultipartFile.fromFileSync(image!.path, filename: image!.name),
+    });
   }
+  // Future<Map<String, dynamic>> toJson() async {
+  //   return {
+  //     'title': title??"",
+  //     'description': desc??"",
+  //     'image': image == null
+  //         ? null
+  //         : await MultipartFile.fromFile(image!.path, filename: image!.name)
+  //   };
+  // }
 }

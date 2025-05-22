@@ -10,7 +10,6 @@ import 'package:login_task_nti/feature/auth/data/repo/repo_register/repo_registe
 
 class RepoRegisterImple implements RepoRegister {
   final ApiConsumer apiConsumer;
-// TODO :WRS
   RepoRegisterImple({required this.apiConsumer}) : super();
   @override
   Future<Either<Failure, ResponseRegisterModel>> registerUsers(

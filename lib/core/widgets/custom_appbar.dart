@@ -22,7 +22,7 @@ class CustomAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<UserCubit, UserState>(listener: (context, state) {
       if (state is UserErrorState) {
-        MyNavigator.getOff(context,
+        MyNavigator.goTo(
             screen: () => const LogInView(), isReplace: true);
       }
     }, builder: (context, state) {
@@ -33,8 +33,7 @@ class CustomAppbar extends StatelessWidget {
           child: Row(
             children: [
               InkWell(
-                onTap: () => MyNavigator.goto(
-                  context,
+                onTap: () => MyNavigator.goTo(
                   screen: () => const ProfileView(),
                 ),
                 child: CircleAvatar(
@@ -69,7 +68,7 @@ class CustomAppbar extends StatelessWidget {
               isNeededIcon == true
                   ? IconButton(
                       onPressed: () {
-                        MyNavigator.goto(context,
+                        MyNavigator.goTo(
                             screen: () => const AddTaskView());
                       },
                       icon: SvgPicture.asset(
@@ -83,7 +82,7 @@ class CustomAppbar extends StatelessWidget {
                   ? IconButton(
                       onPressed: () {
                         CacheHelper.removeData(key: CacheKey.accessToken);
-                        MyNavigator.goto(context,
+                        MyNavigator.goTo(
                             screen: () => const LogInView());
                       },
                       icon:const Icon(Icons.logout,size: 20,))

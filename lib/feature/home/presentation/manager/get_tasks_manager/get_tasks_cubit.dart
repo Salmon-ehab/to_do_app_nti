@@ -7,16 +7,16 @@ class GetTasksCubit extends Cubit<GetTasksState> {
   final GetTaskRepoImple getTaskRepoImple;
   static GetTasksCubit get(context) => BlocProvider.of(context);
 
-  void getTasksFromAPI() async {
+   getTasksFromAPI() async {
     var response = await getTaskRepoImple.getTask();
-    print("tasks5555555555555555: $response");
+    // print("tasks5555555555555555: $response");
 
     response.fold((error) {
       // print("Error in getUserDataFromAPI: $error");
 
       emit(GetTasksFailure(error: error.toString()));
     }, (taskModel) {
-      print("👤 getTasks response: $taskModel");
+      // print("👤 getTasks response: $taskModel");
 
       emit(GetTasksSuccessState(taskModelHome: taskModel));
     });

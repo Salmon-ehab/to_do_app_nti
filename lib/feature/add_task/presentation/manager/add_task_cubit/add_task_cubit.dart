@@ -15,21 +15,17 @@ class AddTaskCubit extends Cubit<AddTaskState> {
 
   void onAddTaskPressed() async {
     if (!key.currentState!.validate()) {
-      // if (image == null) {
-      //   emit(AddTaskErrorState(error: "من فضلك اختر صورة قبل إرسال المهمة."));
-      //   return;
-      // }
+      return;
     }
-    // if (image == null) {
-    //     emit(AddTaskErrorState(error: "please add photo"));
-    //     return;
-    //   }
+    if (image == null) {
+      emit(AddTaskErrorState(error: "please add photo"));
+      return;
+    }
     emit(AddTaskLoadingState());
     var result = await repoAddTaslImple.addTask(
         title: titleController.text,
         desc: descriptionController.text,
-        image: image!
-        );
+        image: image!);
     result.fold((error) {
       emit(AddTaskErrorState(error: error.toString()));
     }, (message) {

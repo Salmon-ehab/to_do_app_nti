@@ -44,7 +44,7 @@ class LetStartBody extends StatelessWidget {
         CustomButton(
             onPressed: () {
               CacheHelper.saveData(key: CacheKey.firstTime,value: false);
-              MyNavigator.goto(context, screen: const SigninView());
+              MyNavigator.goTo( screen: const SigninView(),isReplace: true);
             },
             textButton: S.of(context).LetButton),
       ],

@@ -39,7 +39,7 @@ class SigninBody extends StatelessWidget {
                 BlocConsumer<RegisterCubit, RegisterState>(
                   listener: (context, state) {
                     if (state is RegisterSuccessState) {
-                      MyNavigator.getOff(context,
+                      MyNavigator.goTo(
                           screen: const LogInView(), isReplace: true);
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text(

@@ -18,14 +18,14 @@ class UpdateRepoImple implements UpdateRepo {
     try {
       final response = await apiConsumer.put(EndPoints.updateProfile,
           data: {'username': userName, 'image': image}, isProtected: true);
-      print("salma :$response");
+      // print("salma :$response");
       ResponseModel responseModel = ResponseModel.fromJson(response);
       return Right(responseModel);
     } on DioException catch (e) {
       final error = AppException.fromDio(e);
       return Left(Failure(error.message));
     } catch (e) {
-      print("salma :${e.toString()}");
+      // print("salma :${e.toString()}");
 
       return Left(Failure("Incorrect email or password, try again."));
     }

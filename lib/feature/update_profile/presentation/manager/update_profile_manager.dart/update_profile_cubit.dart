@@ -25,10 +25,10 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
         userName: nameController.text, image: image!);
     result.fold((error) {
       emit(UpdateFailureState(error: error.toString()));
-      print("error salma:$error");
+      // print("error salma:$error");
     }, (response) {
       emit(UpdateSuccessState(responseModel: response));
-      print("success:$response");
+      // print("success:$response");
     });
   }
 }

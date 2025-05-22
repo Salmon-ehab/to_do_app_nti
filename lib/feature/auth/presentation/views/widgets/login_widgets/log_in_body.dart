@@ -51,13 +51,13 @@ class LogInBody extends StatelessWidget {
                         if (state is LoginSuccessState) {
                           UserCubit.get(context).getUserData(
                               user: state.loginResponseModel.user!);
-                          MyNavigator.getOff(context,
+                          MyNavigator.goTo(
                               screen: () => const HomeView(), isReplace: true);
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Success')));
                         }
                         if (state is LoginErrorState) {
-                          print(state.error);
+                          // print(state.error);
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(
                             state.error,

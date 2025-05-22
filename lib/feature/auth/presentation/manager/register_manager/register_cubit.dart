@@ -37,7 +37,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         userName: nameController.text, password: passwordController.text,image: image);
 
     result.fold((error) {
-      print(error.message);
+      // print(error.message);
       emit(RegisterFailureState(error: error.message));
     }, (response) {
       emit(RegisterSuccessState());

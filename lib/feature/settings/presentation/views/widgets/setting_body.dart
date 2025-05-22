@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:login_task_nti/core/cache/cache_helper.dart';
-import 'package:login_task_nti/core/cache/cache_key.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:login_task_nti/core/helper/my_navigator.dart';
 import 'package:login_task_nti/core/utils/styles.dart';
-import 'package:login_task_nti/feature/settings/presentation/views/widgets/language_switch.dart';
-import 'package:login_task_nti/generated/l10n.dart';
-import 'package:login_task_nti/main.dart';
+import 'package:login_task_nti/core/widgets/custom_button.dart';
+import 'package:login_task_nti/feature/auth/presentation/views/log_in_view.dart';
+import 'package:login_task_nti/feature/settings/presentation/delete_user_cubit/delete_user_cubit.dart';
+import 'package:login_task_nti/feature/settings/presentation/delete_user_cubit/delete_user_state.dart';
+
+import 'language_switch.dart';
 
 class SettingBody extends StatefulWidget {
   const SettingBody({super.key});
@@ -18,35 +20,51 @@ class _SettingBodyState extends State<SettingBody> {
   bool isEnglish = true;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 72.h),
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Row(
+    return BlocListener<DeleteUserCubit, DeleteUserState>(
+      listener: (context, state) async {
+        if (state is DeleteUserErrorState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.error)),
+          );
+        } else if (state is DeleteUserSuccessState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("User Deleted successfully")),
+          );
+          MyNavigator.goTo(screen: const LogInView(), isReplace: true);
+        }
+      },
+      child: Padding(
+        padding: const EdgeInsetsDirectional.only(start: 27, end: 33, top: 50),
+        child: Column(
+          children: [
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(S.of(context).Language, style: Styles.textStyle20),
+                 Text("Language", style: Styles.textStyle20),
                 LanguageSwitcher(
-                    isEnglishSelected: isEnglish,
-                    onToggle:_toggleLanguage
-                     )
+                    isEnglishSelected: isEnglish, onToggle: _toggleLanguage)
               ],
             ),
-          ),
-        ],
+            const Spacer(),
+            CustomButton(
+                textButton: "Delete Account",
+                onPressed: DeleteUserCubit.get(context).deleteUserI)
+          ],
+        ),
       ),
     );
   }
-void _toggleLanguage() async {
-  Locale newLocale = isEnglish ? const Locale('ar', 'AE') : const Locale('en', 'US');
-  await CacheHelper.saveData(key: CacheKey.language, value: newLocale.languageCode);
-  print(CacheHelper.getData(key: CacheKey.language));
-  ToDoApp.setLocale(context, newLocale); // هذه الطريقة تعيد بناء التطبيق
-  setState(() {
-    isEnglish = !isEnglish;
-      print(CacheHelper.getData(key: CacheKey.language));
 
-  });
-}}
+  void _toggleLanguage() async {
+    // Locale newLocale =
+    //     isEnglish ? const Locale('ar', 'AE') : const Locale('en', 'US');
+    // await CacheHelper.saveData(
+    //     key: CacheKey.language, value: newLocale.languageCode);
+    // print(CacheHelper.getData(key: CacheKey.language));
+    // ToDoApp.setLocale(context, newLocale); // هذه الطريقة تعيد بناء التطبيق
+    setState(() {
+      isEnglish = !isEnglish;
+      // print(CacheHelper.getData(key: CacheKey.language));
+    });
+  }
+}

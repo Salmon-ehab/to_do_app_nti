@@ -16,12 +16,8 @@ class UserCubit extends Cubit<UserState> {
     var response = await getDataImple.getData();
 
     response.fold((error) {
-     // print("Error in getUserDataFromAPI: $error");
-
       emit(UserErrorState(error: error.toString()));
     }, (userModel) {
-         print("👤 getUserData response: ${userModel.image}");
-
       emit(UserSuccessState(userModel: userModel));
     });
   }

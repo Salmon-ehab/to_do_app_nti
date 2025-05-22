@@ -13,9 +13,14 @@ import 'package:login_task_nti/feature/home/data/repo/get_data_repo/get_data_imp
 import 'package:login_task_nti/feature/home/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:login_task_nti/generated/l10n.dart';
 
+import 'core/cache/cache_data.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
+  CacheData.accessToken = await CacheHelper.getData(key: CacheKey.accessToken);
+  CacheData.refreshToken =
+      await CacheHelper.getData(key: CacheKey.refreshToken);
   runApp(const ToDoApp());
 }
 
@@ -32,7 +37,7 @@ class ToDoApp extends StatefulWidget {
 }
 
 class _ToDoAppState extends State<ToDoApp> {
-   late Locale _locale;
+  late Locale _locale;
 
   @override
   void initState() {
@@ -58,7 +63,7 @@ class _ToDoAppState extends State<ToDoApp> {
         create: (context) =>
             UserCubit(GetDataRepoImple(DioConsumer(dio: Dio()))),
         child: GetMaterialApp(
-          locale: Locale("en"),
+          locale: const Locale("en"),
           supportedLocales: const [
             Locale('en', 'US'),
             Locale('ar', 'AE'),

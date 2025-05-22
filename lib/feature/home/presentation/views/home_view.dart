@@ -12,7 +12,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create:(context)=> GetTasksCubit(GetTaskRepoImple(apiConsumer: DioConsumer(dio: Dio()))),
+      create:(context)=> GetTasksCubit(GetTaskRepoImple(apiConsumer: DioConsumer(dio: Dio())))..getTasksFromAPI(),
       child: const Scaffold(
         body: HomeBody(),
       ),

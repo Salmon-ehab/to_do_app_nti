@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:login_task_nti/core/cache/cache_helper.dart';
-import 'package:login_task_nti/core/cache/cache_key.dart';
 import 'package:login_task_nti/core/utils/app_color.dart';
 import 'package:login_task_nti/core/utils/styles.dart';
 import 'package:login_task_nti/feature/home/presentation/manager/get_tasks_manager/get_tasks_cubit.dart';
@@ -11,25 +9,15 @@ import 'package:login_task_nti/feature/home/presentation/manager/user_cubit/user
 import 'package:login_task_nti/feature/home/presentation/views/widgets/task_widget.dart';
 import 'package:login_task_nti/generated/l10n.dart';
 
-class TasksFile extends StatefulWidget {
+class TasksFile extends StatelessWidget {
   const TasksFile({super.key});
 
-  @override
-  State<TasksFile> createState() => _TasksFileState();
-}
-
-class _TasksFileState extends State<TasksFile> {
-   @override
-     void initState() {
-    super.initState();
-    GetTasksCubit.get(context).getTasksFromAPI();
-  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GetTasksCubit, GetTasksState>(
       listener: (context, state) {
         UserCubit.get(context).getUserDataFromAPI();
-        print(CacheHelper.getData(key: CacheKey.accessToken));
+        // print(CacheHelper.getData(key: CacheKey.accessToken));
         if (state is GetTasksSuccessState) {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text(
@@ -79,17 +67,20 @@ class _TasksFileState extends State<TasksFile> {
               ),
               SizedBox(height: 31.h),
               if (state is GetTasksSuccessState)
-                ListView.separated(
-                    // physics: const NeverScrollableScrollPhysics(),
-                    // shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      return TaskWidget(
-                          taskModelHome: state.taskModelHome[index]);
-                    },
-                    separatorBuilder: (BuildContext context, _) {
-                      return SizedBox(height: 20.h);
-                    },
-                    itemCount: state.taskModelHome.length),
+                SizedBox(
+                  height: 300,
+                  child: ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return TaskWidget(
+                            taskModelHome: state.taskModelHome[index]);
+                      },
+                      separatorBuilder: (BuildContext context, _) {
+                        return SizedBox(height: 20.h);
+                      },
+                      itemCount: state.taskModelHome.length),
+                ),
               SizedBox(height: 20.h),
             ],
           ),

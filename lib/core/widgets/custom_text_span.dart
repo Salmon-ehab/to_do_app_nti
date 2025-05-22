@@ -22,7 +22,7 @@ class CustomTextSpan extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            MyNavigator.goto(context, screen: routePage);
+            MyNavigator.goTo( screen: routePage);
           },
           child: Text(
             " \t\t\t$text2",
