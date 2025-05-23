@@ -18,20 +18,20 @@ class TasksFile extends StatelessWidget {
       listener: (context, state) {
         UserCubit.get(context).getUserDataFromAPI();
         // print(CacheHelper.getData(key: CacheKey.accessToken));
-        if (state is GetTasksSuccessState) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text(
-            'Tasks Success',
-            style: TextStyle(color: AppColor.green),
-          )));
-        }
-        if (state is GetTasksFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(
-            state.error,
-            style: const TextStyle(color: Colors.red),
-          )));
-        }
+        // if (state is GetTasksSuccessState) {
+        //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        //       content: Text(
+        //     'Tasks Success',
+        //     style: TextStyle(color: AppColor.green),
+        //   )));
+        // }
+        // if (state is GetTasksFailure) {
+        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //       content: Text(
+        //     state.error,
+        //     style: const TextStyle(color: Colors.red),
+        //   )));
+        // }
       },
       builder: (context, state) {
         if (state is GetTasksLoadingState) {

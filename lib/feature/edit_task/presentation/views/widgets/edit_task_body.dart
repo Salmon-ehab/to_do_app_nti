@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
+import 'package:login_task_nti/core/helper/my_navigator.dart';
 import 'package:login_task_nti/core/helper/my_responsive.dart';
 import 'package:login_task_nti/feature/edit_task/presentation/manager/edit_task_cubit/edit_task_cubit.dart';
 import 'package:login_task_nti/feature/edit_task/presentation/manager/edit_task_cubit/edit_task_state.dart';
 import 'package:login_task_nti/feature/edit_task/presentation/views/widgets/update_button.dart';
 import 'package:login_task_nti/feature/home/data/models/task_model_home.dart';
-import 'package:login_task_nti/feature/home/presentation/manager/get_tasks_manager/get_tasks_cubit.dart';
+import 'package:login_task_nti/feature/home/presentation/views/home_view.dart';
 
 class EditTaskBody extends StatelessWidget {
   final TaskModelHome taskModelHome;
@@ -21,8 +21,8 @@ class EditTaskBody extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Task Updated Successfully!')),
         );
-        GetTasksCubit.get(context).getTasksFromAPI();
-        Get.back();
+        MyNavigator.goTo(screen: () => const HomeView(), isReplace: true);
+        // await GetTasksCubit.get(context).getTasksFromAPI();
       } else if (state is EditTaskFailureState) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to update task: ${state.error}')),

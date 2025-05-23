@@ -13,14 +13,15 @@ import 'package:login_task_nti/feature/home/data/repo/get_data_repo/get_data_imp
 import 'package:login_task_nti/feature/home/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:login_task_nti/generated/l10n.dart';
 
-import 'core/cache/cache_data.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
-  CacheData.accessToken = await CacheHelper.getData(key: CacheKey.accessToken);
-  CacheData.refreshToken =
-      await CacheHelper.getData(key: CacheKey.refreshToken);
+  // String savedLanguageCode =
+  //     CacheHelper.getData(key: CacheKey.language) ?? 'en';
+
+  // CacheData.accessToken = await CacheHelper.getData(key: CacheKey.accessToken);
+  // CacheData.refreshToken =
+  //     await CacheHelper.getData(key: CacheKey.refreshToken);
   runApp(const ToDoApp());
 }
 
@@ -29,7 +30,6 @@ class ToDoApp extends StatefulWidget {
 
   @override
   State<ToDoApp> createState() => _ToDoAppState();
-
   static void setLocale(BuildContext context, Locale locale) {
     _ToDoAppState? state = context.findAncestorStateOfType<_ToDoAppState>();
     state?.setLocale(locale);
@@ -37,21 +37,27 @@ class ToDoApp extends StatefulWidget {
 }
 
 class _ToDoAppState extends State<ToDoApp> {
-  late Locale _locale;
-
-  @override
-  void initState() {
-    super.initState();
-    String? langCode = CacheHelper.getData(key: CacheKey.language);
-    _locale = langCode != null ? Locale(langCode) : const Locale('en', 'US');
-  }
-
+  Locale _locale = const Locale('en', 'US');
   void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
     });
-    CacheHelper.saveData(key: CacheKey.language, value: locale.languageCode);
   }
+  // late Locale _locale;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   String? langCode = CacheHelper.getData(key: CacheKey.language);
+  //   _locale = langCode != null ? Locale(langCode) : const Locale('en', 'US');
+  // }
+
+  // void setLocale(Locale locale) {
+  //   setState(() {
+  //     _locale = locale;
+  //   });
+  //   CacheHelper.saveData(key: CacheKey.language, value: locale.languageCode);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +69,7 @@ class _ToDoAppState extends State<ToDoApp> {
         create: (context) =>
             UserCubit(GetDataRepoImple(DioConsumer(dio: Dio()))),
         child: GetMaterialApp(
-          locale: const Locale("en"),
+          locale: _locale,
           supportedLocales: const [
             Locale('en', 'US'),
             Locale('ar', 'AE'),

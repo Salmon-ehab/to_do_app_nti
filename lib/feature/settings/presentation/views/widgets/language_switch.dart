@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:login_task_nti/core/utils/app_color.dart';
 import 'package:login_task_nti/core/utils/styles.dart';
 
 class LanguageSwitcher extends StatelessWidget {
   final bool isEnglishSelected;
-  final VoidCallback onToggle;
+  final void Function()? onToggle;
 
   const LanguageSwitcher({
     super.key,
@@ -15,7 +16,7 @@ class LanguageSwitcher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onToggle, 
       child: Container(
         height: 36.h,
@@ -31,8 +32,8 @@ class LanguageSwitcher extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: isEnglishSelected ? AppColor.coolGray : AppColor.green,
                   borderRadius: BorderRadius.horizontal(
-                    left: Radius.circular(isEnglishSelected ? 5.r : 0), 
-                    right: Radius.circular(isEnglishSelected ? 0 : 5.r),
+                    left: Radius.circular(Intl.defaultLocale == "en" ?0: 5), 
+                    right: Radius.circular(Intl.defaultLocale == "en" ? 5 : 0),
                   ),
                 ),
                 alignment: Alignment.center,
@@ -51,8 +52,8 @@ class LanguageSwitcher extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: isEnglishSelected ? AppColor.green : AppColor.coolGray,
                   borderRadius: BorderRadius.horizontal(
-                    left: Radius.circular(isEnglishSelected ? 0 : 5.r),
-                    right: Radius.circular(isEnglishSelected ? 5.r : 0),
+                    left: Radius.circular(Intl.defaultLocale == "en" ? 5 : 0),
+                    right: Radius.circular(Intl.defaultLocale == "en" ? 0 : 5),
                   ),
                 ),
                 alignment: Alignment.center,

@@ -6,6 +6,7 @@ import 'package:login_task_nti/core/errors/app_exception.dart';
 import 'package:login_task_nti/core/helper/my_navigator.dart';
 import 'package:login_task_nti/core/network/api_consumer.dart';
 import 'package:login_task_nti/core/network/end_points.dart';
+import 'package:login_task_nti/core/routes/routes.export.dart';
 import 'package:login_task_nti/feature/auth/presentation/views/log_in_view.dart';
 
 class DioConsumer extends ApiConsumer {
@@ -13,82 +14,70 @@ class DioConsumer extends ApiConsumer {
 
   DioConsumer({required this.dio}) {
     dio.options.baseUrl = EndPoints.baseUrl;
-    dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) {
-        print("--- Headers : ${options.headers.toString()}");
-        print("--- Endpoint : ${options.path.toString()}");
-        return handler.next(options);
-      },
-      onResponse: (response, handler) {
-        print("--- Response : ${response.data.toString()}");
-        return handler.next(response);
-      },
-      onError: (DioException error, handler) async {
-        print("--- Error : ${error.response?.data.toString()}");
+     dio.interceptors.add(InterceptorsWrapper(
+       onRequest: (options, handler) {
+         print("--- Headers : ${options.headers.toString()}");
+         print("--- endpoint : ${options.path.toString()}");
+         return handler.next(options);
+       },
+       onResponse: (response, handler) {
+         print("--- Response : ${response.data.toString()}");
+         return handler.next(response);
+       },
+       onError: (DioException error, handler) async {
+         print("--- Error : ${error.response?.data.toString()}");
+         //ApiResponse apiResponse = ApiResponse.fromError(error);
+         if(error.response?.data['message'].contains('expired'))
+         {
+           // refresh token
+           try {
+             var res = await post(
+                 EndPoints.refreshToken,
+                 sendRefreshToken: true,
+                 isProtected: true
+             );
+            
+               // must update token
+               CacheData.accessToken = res['access_token'];
+               await CacheHelper.saveData(key: CacheKey.accessToken, value: CacheData.accessToken);
 
-        final message = error.response?.data['message'] ?? '';
+               // Retry original request
+               final options = error.requestOptions;
+               if (options.data is FormData) {
+                 final oldFormData = options.data as FormData;
 
-        if (message.toString().toLowerCase().contains('expired')) {
-          final refreshToken = CacheData.refreshToken ??
-              CacheHelper.getData(key: CacheKey.refreshToken);
+                 // Convert FormData to map so it can be rebuilt
+                 final Map<String, dynamic> formMap = {};
+                 for (var entry in oldFormData.fields) {
+                   formMap[entry.key] = entry.value;
+                 }
 
-          if (refreshToken == null) {
-            _logoutUser();
-            return handler.next(error);
-          }
+                 // Add files if any
+                 for (var file in oldFormData.files) {
+                   formMap[file.key] = file.value;
+                 }
 
-          try {
-            final refreshTokenResponse = await dio.post(
-              EndPoints.refreshToken,
-              options: Options(
-                headers: {'Authorization': 'Bearer $refreshToken'},
-              ),
-            );
+                 // Rebuild new FormData
+                 options.data = FormData.fromMap(formMap);
+               }
+               options.headers['Authorization'] = 'Bearer ${CacheData.accessToken}';
+               final response = await dio.fetch(options);
+               return handler.resolve(response);
+    
 
-            if (refreshTokenResponse.data != null &&
-                refreshTokenResponse.data['status'] == true) {
-              final newAccessToken =
-                  refreshTokenResponse.data['data']['access_token'];
+           } catch (e) {
+             CacheHelper.removeData(key: CacheKey.accessToken);
+             CacheHelper.removeData(key: CacheKey.refreshToken);
+             MyNavigator.goTo(screen: ()=>const SigninView(), isReplace: true);
+             return handler.next(error);
+           }
 
-              CacheData.accessToken = newAccessToken;
-              await CacheHelper.saveData(
-                  key: CacheKey.accessToken, value: newAccessToken);
+         }
 
-              final options = error.requestOptions;
-
-              // Handle if request is FormData
-              if (options.data is FormData) {
-                final oldFormData = options.data as FormData;
-                final Map<String, dynamic> formMap = {};
-
-                for (var entry in oldFormData.fields) {
-                  formMap[entry.key] = entry.value;
-                }
-
-                for (var file in oldFormData.files) {
-                  formMap[file.key] = file.value;
-                }
-
-                options.data = FormData.fromMap(formMap);
-              }
-
-              options.headers['Authorization'] = 'Bearer $newAccessToken';
-              final response = await dio.fetch(options);
-              return handler.resolve(response);
-            } else {
-              _logoutUser();
-              return handler.next(error);
-            }
-          } catch (e) {
-            _logoutUser();
-            return handler.next(error);
-          }
-        }
-
-        return handler.next(error);
-      },
-    ));
-  }
+         return handler.next(error);
+       }
+   ));
+ }
 
   void _logoutUser() {
     CacheHelper.removeData(key: CacheKey.accessToken);
@@ -201,8 +190,9 @@ class DioConsumer extends ApiConsumer {
               : data,
           queryParameters: queryParameter,
           options: Options(headers: {
-            'Authorization':
-                'Bearer ${sendRefreshToken ? CacheHelper.getData(key: CacheKey.refreshToken) : CacheData.accessToken}',
+            if (isProtected)
+              'Authorization':
+                  'Bearer ${sendRefreshToken ? CacheHelper.getData(key: CacheKey.refreshToken) : CacheData.accessToken}',
           }));
       return response.data;
     } on DioException catch (e) {
@@ -211,7 +201,31 @@ class DioConsumer extends ApiConsumer {
   }
 
   void handleDioExceptions(DioException e) {
-    final error = AppException.fromDio(e);
-    throw error;
+    try {
+      print("❗ DioException caught:");
+      print("➡ Message: ${e.message}");
+      print("➡ Status code: ${e.response?.statusCode}");
+
+      dynamic data = e.response?.data;
+      String serverMessage = 'Unknown error occurred';
+
+      if (data is Map<String, dynamic>) {
+        serverMessage = data['message'] ?? serverMessage;
+      } else if (data is String) {
+        print("❗ Response is HTML or raw string:\n$data");
+        serverMessage = 'Internal server error or unexpected response format.';
+      } else if (data == null) {
+        serverMessage = 'No response from server.';
+      }
+
+      print("➡ Parsed message: $serverMessage");
+
+      final error = AppException.fromDio(e);
+      throw error;
+    } catch (err, stack) {
+      print("🔥 Exception while handling DioException: $err");
+      print("📌 StackTrace: $stack");
+      rethrow;
+    }
   }
 }

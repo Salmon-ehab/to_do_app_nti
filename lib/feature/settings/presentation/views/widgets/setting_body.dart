@@ -4,8 +4,9 @@ import 'package:login_task_nti/core/helper/my_navigator.dart';
 import 'package:login_task_nti/core/utils/styles.dart';
 import 'package:login_task_nti/core/widgets/custom_button.dart';
 import 'package:login_task_nti/feature/auth/presentation/views/log_in_view.dart';
-import 'package:login_task_nti/feature/settings/presentation/delete_user_cubit/delete_user_cubit.dart';
-import 'package:login_task_nti/feature/settings/presentation/delete_user_cubit/delete_user_state.dart';
+import 'package:login_task_nti/feature/settings/presentation/manager/delete_user_cubit/delete_user_cubit.dart';
+import 'package:login_task_nti/feature/settings/presentation/manager/delete_user_cubit/delete_user_state.dart';
+import 'package:login_task_nti/main.dart';
 
 import 'language_switch.dart';
 
@@ -48,23 +49,30 @@ class _SettingBodyState extends State<SettingBody> {
             const Spacer(),
             CustomButton(
                 textButton: "Delete Account",
-                onPressed: DeleteUserCubit.get(context).deleteUser())
+                onPressed: DeleteUserCubit.get(context).deleteUser),
+               const SizedBox(height: 100),
           ],
         ),
       ),
     );
   }
-
-  void _toggleLanguage() async {
-    // Locale newLocale =
-    //     isEnglish ? const Locale('ar', 'AE') : const Locale('en', 'US');
-    // await CacheHelper.saveData(
-    //     key: CacheKey.language, value: newLocale.languageCode);
-    // print(CacheHelper.getData(key: CacheKey.language));
-    // ToDoApp.setLocale(context, newLocale); // هذه الطريقة تعيد بناء التطبيق
-    setState(() {
+    void _toggleLanguage() {
+  Locale newLocale = isEnglish ?const Locale('ar', 'AE') :const Locale('en', 'US');
+  ToDoApp.setLocale(context, newLocale);
+  setState(() {
       isEnglish = !isEnglish;
-      // print(CacheHelper.getData(key: CacheKey.language));
     });
-  }
+    }
+// void _toggleLanguage() async {
+//   setState(() {
+//     isEnglish = !isEnglish;
+//   });
+
+//   final newLocaleCode = isEnglish ? 'en' : 'ar';
+//   await CacheHelper.saveData(
+//       key: CacheKey.language, value: newLocaleCode);
+
+//   // MyApp.setLocale(context, Locale(newLocaleCode));
+// }
+
 }

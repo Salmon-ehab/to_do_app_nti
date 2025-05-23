@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:login_task_nti/core/helper/my_navigator.dart';
 import 'package:login_task_nti/core/utils/svg.dart';
 import 'package:login_task_nti/feature/edit_task/presentation/manager/delete_task_cubit/delete_task_cubit.dart';
 import 'package:login_task_nti/feature/edit_task/presentation/manager/delete_task_cubit/delete_task_state.dart';
-import 'package:login_task_nti/feature/home/presentation/manager/get_tasks_manager/get_tasks_cubit.dart'; // هنحتاج الـ state عشان نعمل listener
+import 'package:login_task_nti/feature/home/presentation/views/home_view.dart'; // هنحتاج الـ state عشان نعمل listener
 
 class CustomAppbarEdit extends StatelessWidget implements PreferredSizeWidget {
   final int? taskId;
@@ -49,9 +48,9 @@ class CustomAppbarEdit extends StatelessWidget implements PreferredSizeWidget {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Task Deleted Successfully!')),
                 );
-
-                GetTasksCubit.get(context).getTasksFromAPI();
-                Get.back();
+                MyNavigator.goTo(
+                    screen: () => const HomeView(), isReplace: true);
+                // GetTasksCubit.get(context).getTasksFromAPI();
               } else if (state is DeleteTaskFailureState) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
