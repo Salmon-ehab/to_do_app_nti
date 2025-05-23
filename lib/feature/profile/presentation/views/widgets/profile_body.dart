@@ -15,26 +15,28 @@ class ProfileBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: 20.h),
-          const CustomAppbar(isNeededIcon: false,),
-          SizedBox(height: 37.h),
-           ProfileTabsWidget(
-              prefixIcon: SvgAssets.profileIcon,
-              textTab: S.of(context).updateprofile,
-              routes:const UpdataProfileView()),
-           ProfileTabsWidget(
-              prefixIcon: SvgAssets.lockIcon,
-              textTab: S.of(context).ChangePassword,
-              routes: const ChangedPasswordView()),
-           ProfileTabsWidget(
-              prefixIcon: SvgAssets.settingIcon,
-              textTab: S.of(context).Settings,
-              routes: const SettingView()),
-        ],
-      ),
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 20.h),
+            const CustomAppbar(
+              isNeededIcon: false,
+            ),
+            SizedBox(height: 37.h),
+            ProfileTabsWidget(
+                prefixIcon: SvgAssets.profileIcon,
+                textTab: S.of(context).updateprofile,
+                routes: const UpdataProfileView()),
+            ProfileTabsWidget(
+                prefixIcon: SvgAssets.lockIcon,
+                textTab: S.of(context).ChangePassword,
+                routes: const ChangedPasswordView()),
+            ProfileTabsWidget(
+                prefixIcon: SvgAssets.settingIcon,
+                textTab: S.of(context).Settings,
+                routes: const SettingView()),
+         
+          ]),
     );
   }
 }

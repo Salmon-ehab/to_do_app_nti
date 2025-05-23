@@ -8,12 +8,12 @@ class DeleteUserCubit extends Cubit<DeleteUserState>{
   static DeleteUserCubit get(context) => BlocProvider.of(context);
 
 
-   deleteUserI() async {
+   deleteUser() async {
     var response = await deleteUserRepoImple.deleteUser();
     response.fold((error) {
       emit(DeleteUserErrorState(error: error.toString()));
-    }, (userModel) {
-      emit(DeleteUserSuccessState());
+    }, (responseModel) {
+      emit(DeleteUserSuccessState(responseModel));
     });
   }
 }

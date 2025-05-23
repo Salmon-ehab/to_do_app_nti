@@ -10,5 +10,7 @@ abstract class EndPoints {
   static const String deleteUser= 'delete_user';
     static const String refreshToken= 'refresh_token';
     static const String editTask ='tasks/';
+        static const String deleteTask ='tasks/';
+
 
 }

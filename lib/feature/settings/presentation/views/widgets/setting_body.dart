@@ -48,7 +48,7 @@ class _SettingBodyState extends State<SettingBody> {
             const Spacer(),
             CustomButton(
                 textButton: "Delete Account",
-                onPressed: DeleteUserCubit.get(context).deleteUserI)
+                onPressed: DeleteUserCubit.get(context).deleteUser())
           ],
         ),
       ),
